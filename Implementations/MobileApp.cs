@@ -5,8 +5,8 @@ namespace ObserverPattern.Implementations;
 
 public class MobileApp : IObserver
 {
-	public void Update(decimal stockPrice)
+	public void Update(WeatherModel weatherModel)
 	{
-		Console.WriteLine($"MobileApp: Stock price updated to {stockPrice:C}");
+		Console.WriteLine($"MobileApp: Current temprature is: {weatherModel.Temperature}°C");
 	}
 }

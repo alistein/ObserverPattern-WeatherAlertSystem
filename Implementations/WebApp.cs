@@ -5,8 +5,21 @@ namespace ObserverPattern.Implementations;
 
 public class WebApp : IObserver
 {
-	public void Update(decimal stockPrice)
+	List<WeatherModel> weatherModels = [];
+
+	public void Update(WeatherModel weatherModel)
 	{
-		Console.WriteLine($"WebApp: Stock price updated to {stockPrice:C}");
+		weatherModels.Add(weatherModel);
+
+		Console.WriteLine($"""
+
+							WebApp Trend:
+
+							Current Temperature: {weatherModel.Temperature}°C
+							Current Humidty: {weatherModel.Humidity}%
+							Current Wind Speed: {weatherModel.WindSpeed} km/h
+
+							Average Temperature: {Math.Floor(weatherModels.Average(wm => wm.Temperature))}°C
+							""");
 	}
 }

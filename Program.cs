@@ -1,19 +1,48 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using ObserverPattern;
 using ObserverPattern.Implementations;
-using ObserverPattern.Interfaces;
 
-Stock stock = new Stock();
+WeatherStation weatherStation = new();
 
-IObserver webApp = new WebApp();
-IObserver mobile = new MobileApp();
+MobileApp mobileApp = new();
+WebApp webApp = new();
+AlertSystem alertSystem = new();
 
-stock.Subscribe(webApp);
-stock.Subscribe(mobile);
+weatherStation.Subscribe(mobileApp);
+weatherStation.Subscribe(webApp);
+weatherStation.Subscribe(alertSystem);
 
-stock.Price = 20.50m;
-stock.Price = 30.50m;
-stock.Price = 60.70m;
+List<WeatherModel> dummyWeathers =
+[
+	new WeatherModel
+	{
+		Temperature = 30,
+		Humidity = 13,
+		WindSpeed = 200
+	},
 
-stock.Unsubsribe(mobile);
+	new WeatherModel
+	{
+		Temperature = 50,
+		Humidity = 40,
+		WindSpeed = 300
+	},
 
-stock.Price = 80.50m;
+	new WeatherModel
+	{
+		Temperature = 20,
+		Humidity = 19,
+		WindSpeed = 50
+	}
+];
+
+foreach (var dummyWeather in dummyWeathers)
+{
+	await Task.Delay(2000);
+
+	weatherStation.WeatherModel = dummyWeather;
+
+	weatherStation.Unsubsribe(mobileApp);
+
+	Console.WriteLine("------------------------------------------");
+}
